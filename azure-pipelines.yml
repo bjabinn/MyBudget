@@ -5,7 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  buildConfiguration: 'Release'
+  buildConfiguration: 'Debug'
 
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
@@ -16,20 +16,3 @@ steps:
   inputs:
     command: test
     projects: '**/*Tests/*.csproj'
-
-- task: DotNetCoreCLI@2
-  displayName: 'Genero un zip con los ficheros de aplicacion web'
-  inputs:
-    command: publish
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'    
-    publishWebProjects: true    
-    zipAfterPublish: true
-
-- task: AzureRmWebAppDeployment@4
-  displayName: 'Publico en la web App'
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Free Trial(29e29775-65da-4038-990b-d8f6dbe89995)'
-    appType: 'webApp'
-    WebAppName: 'UCAmybudgetDev'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
