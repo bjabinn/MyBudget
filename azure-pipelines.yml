@@ -21,8 +21,9 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'MyBudget'
-    publishLocation: 'Container'
+    ArtifactName: 'MyBudgetFile'
+    publishLocation: 'FilePath'
+    TargetPath: 'MyBudget'
 
 - task: AzureRmWebAppDeployment@4
   inputs:
