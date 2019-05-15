@@ -12,18 +12,18 @@ steps:
   displayName: 'Bajamos dependencias y compilamos la web app'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Lanzamos los test'
+  inputs:
+    command: test
+    projects: '**/*Tests/*.csproj'
+
+- task: DotNetCoreCLI@2
   displayName: 'Genero un zip con los ficheros de aplicacion web'
   inputs:
     command: publish
     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'    
     publishWebProjects: true    
     zipAfterPublish: true
-
-- task: DotNetCoreCLI@2
-  displayName: 'Lanzamos los test'
-  inputs:
-    command: test
-    projects: '**/*Tests/*.csproj'
 
 - task: AzureRmWebAppDeployment@4
   displayName: 'Publico en la web App'
@@ -32,4 +32,4 @@ steps:
     azureSubscription: 'Free Trial(29e29775-65da-4038-990b-d8f6dbe89995)'
     appType: 'webApp'
     WebAppName: 'UCAmybudgetDev'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
