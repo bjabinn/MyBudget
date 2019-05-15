@@ -9,18 +9,14 @@ variables:
 
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'Construimos'
-
-- script: dotnet publish --output $(Build.ArtifactStagingDirectory)
-  displayName: 'Publico la aplicación'
+  displayName: 'Bajamos dependencias y compilamos la web app'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Se publica'
+  displayName: 'Genero un zip con los ficheros de aplicacion web'
   inputs:
     command: publish
     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'    
-    publishWebProjects: false
-    modifyOutputPath: true
+    publishWebProjects: true    
     zipAfterPublish: true
 
 - task: DotNetCoreCLI@2
