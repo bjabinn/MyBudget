@@ -9,23 +9,28 @@ variables:
 
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+  displayName: 'Construimos'
 
 - script: dotnet publish --output $(Build.ArtifactStagingDirectory)
+  displayName: 'Publico la aplicación'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Se publica'
+  inputs:
+    command: publish
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'    
+    publishWebProjects: false
+    modifyOutputPath: true
+    zipAfterPublish: true
+
+- task: DotNetCoreCLI@2
+  displayName: 'Lanzamos los test'
   inputs:
     command: test
     projects: '**/*Tests/*.csproj'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'MyBudgetFile'
-    publishLocation: 'FilePath'
-    TargetPath: 'MyBudget'
-
 - task: AzureRmWebAppDeployment@4
+  displayName: 'Publico en la web App'
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Free Trial(29e29775-65da-4038-990b-d8f6dbe89995)'
