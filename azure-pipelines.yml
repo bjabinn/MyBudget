@@ -16,3 +16,11 @@ steps:
   inputs:
     command: test
     projects: '**/*Tests/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Genero un zip con los ficheros de aplicacion web'
+  inputs:
+    command: publish
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'    
+    publishWebProjects: true    
+    zipAfterPublish: true
