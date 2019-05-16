@@ -1,1 +1,18 @@
- 
+trigger:
+- develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Debug'
+
+steps:
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'Bajamos dependencias y compilamos la web app'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Lanzamos los test'
+  inputs:
+    command: test
+    projects: '**/*Tests/*.csproj'
