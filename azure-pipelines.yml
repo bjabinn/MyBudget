@@ -30,11 +30,11 @@ steps:
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'    
     
-- task: AzureRmWebAppDeployment@4
-  displayName: 'Publico en la web App'
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Free Trial(29e29775-65da-4038-990b-d8f6dbe89995)'
-    appType: 'webApp'
-    WebAppName: 'UCAmybudgetDev'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+#- task: AzureRmWebAppDeployment@4
+#  displayName: 'Publico en la web App'
+#  inputs:
+#    ConnectionType: 'AzureRM'
+#    azureSubscription: 'Free Trial(29e29775-65da-4038-990b-d8f6dbe89995)'
+#    appType: 'webApp'
+#    WebAppName: 'UCAmybudgetDev'
+#    packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
