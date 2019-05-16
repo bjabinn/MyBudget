@@ -16,6 +16,11 @@ steps:
   inputs:
     command: test
     projects: '**/*Tests/*.csproj'
+
+- task: PublishBuildArtifacts@1    
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'    
     
 - task: DotNetCoreCLI@2
   displayName: 'Genero un zip con los ficheros de aplicacion web'
